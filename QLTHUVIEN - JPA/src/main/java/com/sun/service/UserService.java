@@ -10,20 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserService {
     @Autowired
     private UserRepository userRepository;
-    @Transactional
     public List<User> getAll(){
-        List<User> list = new ArrayList<>();
-        try{
-             list = userRepository.findAll();
-            System.out.println(list);
-        }catch (Exception ex){
-
-            System.out.println(ex.getMessage());
-        }
-        return list;
+       return  userRepository.findAll();
     }
 
 }

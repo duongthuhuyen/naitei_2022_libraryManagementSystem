@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="QLTHUVIEN" />
         <module name="QLTHUVIEN - Copy" />
+        <module name="QLTHUVIEN - JPA" />
       </profile>
     </annotationProcessing>
   </component>

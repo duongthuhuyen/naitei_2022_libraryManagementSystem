@@ -20,7 +20,8 @@ public class HistoryDetail implements Serializable {
     private int id;
     @ManyToOne
     @JoinColumn(name = "history_id")
-    private Histories history;
-    @Column(name = "book_id")
+    private History history;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
     private int bookId;
 }
