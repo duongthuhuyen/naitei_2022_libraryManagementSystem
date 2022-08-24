@@ -62,8 +62,7 @@ public class UserService implements IUserService{
             return true;
         } catch (HibernateException exception) {
             exception.getMessage();
+            return false;
         }
-
-        return true;
     }
 }
