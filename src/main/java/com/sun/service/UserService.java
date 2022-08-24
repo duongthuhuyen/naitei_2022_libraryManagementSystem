@@ -2,6 +2,7 @@ package com.sun.service;
 
 import com.sun.entity.User;
 import com.sun.repository.UserRepository;
+import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -53,15 +54,16 @@ public class UserService implements IUserService{
 
     @Override
     public boolean addUser(User user) {
-        try {
-            String password = user.getPassword();
-            user.setPassword(this.passwordEncoder.encode(password));
+        String password = user.getPassword();
+        user.setPassword(this.passwordEncoder.encode(password));
 
-            userRepository.save(user);
+        try {
+            if (userRepository.save(user) == null) throw new HibernateException("User: " + user.getName() + "cannot save");
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+        } catch (HibernateException exception) {
+            exception.getMessage();
         }
+
+        return true;
     }
 }

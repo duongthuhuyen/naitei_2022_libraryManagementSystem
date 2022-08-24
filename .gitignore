@@ -223,3 +223,7 @@ README.html
 *.iml
 .idea
 .exercism
+
+/src/main/resources/application.properties
+
+/out
