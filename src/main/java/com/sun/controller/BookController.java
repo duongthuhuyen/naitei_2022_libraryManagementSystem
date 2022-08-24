@@ -25,9 +25,7 @@ public class BookController {
 	
 	@RequestMapping("/searchBook")
 	public String searchBook(@Param("keyword") String keyword, Model model) {
-		List<Book> books = bookService.searchBooks(keyword);
-		model.addAttribute("books", books);
-//		model.addAttribute("keyword", keyword);
+		model.addAttribute("books", bookService.searchBooks(keyword));
 		return "books/books";
 	}
 	
