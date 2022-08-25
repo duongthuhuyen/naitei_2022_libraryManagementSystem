@@ -8,7 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+import java.util.List;
 @Entity
 @Table(name = "histories")
 @Getter
@@ -33,4 +33,6 @@ public class History implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "history")
+    private List<HistoryDetail> historyDetails;
 }

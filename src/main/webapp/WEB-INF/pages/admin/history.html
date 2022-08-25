@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin-History Detail</title>
+    <link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link rel="stylesheet"href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+</head>
+<body>
+
+<div th:insert="layout/headerBook :: header"></div>
+<div class="container mt-2">
+	<div th:if="${history}">
+    <table class="table table-striped">
+        <tr>
+            <td>ID:</td>
+            <td th:utext="${history.getId()}">...</td>
+        </tr>
+        <tr>
+            <td>Borrow date:</td>
+            <td th:utext="${history.getBorrowDate()}">...</td>
+        </tr>
+        <tr>
+            <td>Received date:</td>
+            <td th:utext="${history.getReceivedDate()}">...</td>
+        </tr>
+        <tr>
+            <td>Status:</td>
+            <td th:utext="${history.getStatus()}">...</td>
+        </tr>
+        <tr>
+            <td>User:</td>
+            <td th:utext="${history.getUser().getName()}">...</td>
+        </tr>
+    </table>
+    <table class="table table-striped table-responsive-md mt-2">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>author</th>
+            <th>publisher</th>
+            <th>description</th>
+        </tr>
+        <tr th:each="history : ${history.getHistoryDetails()}">
+            <td th:text="${history.getId()}"></td>
+            <td th:text="${history.getBookId().getName()}"></td>
+            <td th:text="${history.getBookId().getAuthor()}"></td>
+            <td th:text="${history.getBookId().getPublisher()}"></td>
+            <td th:text="${history.getBookId().getDescription()}"></td>
+        </tr>
+    </table>
+</div>
+</div>
+
+<div th:insert="layout/footerBook :: footer"></div>
+</body>
+</html>
