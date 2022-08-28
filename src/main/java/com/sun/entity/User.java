@@ -19,20 +19,25 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column
+    
+	@Column
     private String name;
-    @Column
+    
+
+	@Column
     private String email;
     @Column
     private String password;
 	@Transient
 	private String matchingPassword;
 
-    @Enumerated(EnumType.STRING)
+    
+	@Enumerated(EnumType.STRING)
     @Column(name = "role", length = 50)
     private ERole role;
 
-    public enum ERole{
+    
+	public enum ERole{
         ADMIN,USER;
         public static Optional<ERole> check(String val) {
             try {
