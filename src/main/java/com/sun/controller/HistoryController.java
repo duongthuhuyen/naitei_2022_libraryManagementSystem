@@ -27,7 +27,6 @@ public class HistoryController {
         }
         List<HistoryDto> historyRequestDtos = historyService.getHistory(id);
         model.addAttribute("histories",historyRequestDtos);
-        model.addAttribute("message","");
         return "/historyPage/history";
     }
 

@@ -49,6 +49,7 @@ public class RequestService {
     }
     @Transactional
     public String request(int userId, List<Book> books){
+        System.out.println(userId);
         String msg = "Send Success";
         boolean check = false;
         for(Book book:books) {

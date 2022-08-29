@@ -23,11 +23,20 @@
   
     <ul class="navbar-nav mr-auto" >
       <li class="nav-item active">
-        <a class="nav-link" href="/QLTHUVIEN/home">Home <span class="sr-only"></span></a>
+        <a class="nav-link" href="/QLTHUVIEN_war/home">Home <span class="sr-only"></span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/QLTHUVIEN/user/login">Profile </a>
+        <a class="nav-link" href="/QLTHUVIEN_war/user/login">Profile </a>
       </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/QLTHUVIEN_war/request/view">Add Request</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/history}">History Request</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/admin/request}">Admin Accept Request</a>
+        </li>
     </ul>
     <form th:action="@{/searchBook}" class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" name= "keyword" id = "keyword" type="text" placeholder="Search" aria-label="Search" th:value="${keyword}">

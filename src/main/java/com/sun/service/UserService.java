@@ -1,5 +1,6 @@
 package com.sun.service;
 
+import com.sun.common.CurrentUser;
 import com.sun.entity.User;
 import com.sun.repository.UserRepository;
 import org.hibernate.HibernateException;
@@ -35,7 +36,7 @@ public class UserService implements IUserService{
             throw new UsernameNotFoundException("User does not exits!!!");
 
         User user = users.get(0);
-
+        CurrentUser.currentUser = user;
         Set<GrantedAuthority> authorities = new HashSet<>();
 
         authorities.add(new SimpleGrantedAuthority(String.valueOf(user.getRole())));
