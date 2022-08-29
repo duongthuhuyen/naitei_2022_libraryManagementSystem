@@ -1,42 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="views/layout/base-layout">
-<head>
-  <meta charset="UTF-8">
-</head>
-<body>
-
-<div layout:fragment="body">
-  <div class="container" style="margin: 0 auto;">
-    <h1>Đăng nhập</h1>
-    <div th:if="${param.error != null}"><p style="color: red">
-      Login error!!!
-    </p></div>
-
-    <div th:if="${param.accessDenied != null}"><p style="color: red">
-      Bạn không có quyền truy cập!!!
-    </p></div>
-    <form th:action="@{/user/login}" method="post">
-      <div class="form-row">
-        <div class="col-md-6 form-group">
-          <div class="col-md-6 form-group">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email">
-          </div>
-
-          <div class="col-md-6 form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" name="password">
-          </div>
-
-          <div class="col-md-6 form-group">
-            <button type="submit" class="btn btn-success">Đăng nhập</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-</body>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Login</title>
+	
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet"href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet"href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+		
+	</head>
+	<body>
+		<div th:insert="layout/headerBook :: header"></div>
+			<div class="container my-2">
+				<div class="card">
+					<div class="card-body">
+  						<div class="container" style="margin: 0 auto;">
+    						<h1>Login</h1>
+    						<div th:if="${param.error != null}">
+	    						<p style="color: red">
+	      						Email or Password was WRONG!!!
+	    						</p></div>
+    						<div th:if="${param.accessDenied != null}">
+    							<p style="color: red"> You Don’t Have Permission To Access on This Page!!!</p>
+    						</div>
+						    <form th:action="@{/user/login}" method="post">
+						      <div class="form-row">
+						        <div class="col-md-12 form-group">
+						          <div class="col-md-12 form-group">
+						            <label>Email</label>
+						            <input type="email" class="form-control" name="email">
+						          </div>
+						
+						          <div class="col-md-12 form-group">
+						            <label>Password</label>
+						            <input type="password" class="form-control" name="password">
+						          </div>
+						
+						          <div class="col-md-12 form-group">
+						            <button type="submit" class="btn btn-success">Login</button>
+						          </div>
+						        </div>
+						      </div>
+						    </form>
+  						</div>
+					</div>
+				</div>
+			</div>
+		<div th:insert="layout/footerBook :: footer"></div>	
+	</body>
 </html>

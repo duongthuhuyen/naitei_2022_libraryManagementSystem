@@ -16,29 +16,28 @@
 		<div class="card">
 			<div class="card-body">
 				<div th:switch="${books}" class="container my-5">
-					<p class="my-5">
-						<a href="/add" class="btn btn-primary"> 
-						<i class="fas fa-user-plus ml-2">  Borrow Request </i></a>
-					</p>
 					<div class="col-md-12">
 						<h2 th:case="null">No record found !!</h2>
 						<div th:case="*">
 							<table class="table table-striped table-responsive-md">
 								<thead>
 									<tr>
+										<th>Image</th>
 										<th>Book Name</th>
 										<th>Book Author</th>
 										<th>Description</th>
 										<th>Publisher</th>
+										
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="book : ${books}">
+									<td><img width = "150px" th:src="@{https://images.booksense.com/images/512/282/9781788282512.jpg}"/></td>
 										<td th:text="${book.name}"></td>
 										<td th:text="${book.author}"></td>
 										<td th:text="${book.description}"></td>
-										<td th:text="${book.publisher}"></td>
-									</tr>
+										<td th:text="${book.publisher}"></td> 
+ 									</tr>
 								</tbody>
 							</table>
 						</div>
