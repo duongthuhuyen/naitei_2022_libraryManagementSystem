@@ -23,21 +23,22 @@
   
     <ul class="navbar-nav mr-auto" >
       <li class="nav-item active">
-        <a class="nav-link" href="/QLTHUVIEN/home">Home <span class="sr-only"></span></a>
+        <a class="nav-link" href="/home">Home <span class="sr-only"></span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="/QLTHUVIEN/user/login">Profile </a>
+        <a class="nav-link" href="/book/add">Book-Add </a>
       </li>
     </ul>
     <form th:action="@{/searchBook}" class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" name= "keyword" id = "keyword" type="text" placeholder="Search" aria-label="Search" th:value="${keyword}">
         <input class="btn btn-outline-success active my-2 my-sm-0" type="submit" value="Search" />
     </form>
-	     <a href="user/login" > 
+	     <a href="/user/login" > 
 		<button type="button" class="btn btn-warning ">Login</button></a>
-	     <a href="user/register" > 
+	     <a href="/user/register" > 
 		<button type="button" class="btn btn-info">Register</button></a>
-	
+		<a href="/user/logout" > 
+		<button type="button" class="btn btn-info">Log Out</button></a>
    
     
   </div>
