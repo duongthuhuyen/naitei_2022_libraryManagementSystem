@@ -32,19 +32,19 @@ public class RequestController {
         if (session.getAttribute("cart") == null) {
             List<Integer> cart = new ArrayList<>();
             try {
-                Book book = bookService.getBookById(Integer.parseInt(id));
-                cart.add(Integer.parseInt(id));
+                Book book = bookService.getBookById(Integer.parseInt(bookId));
+                cart.add(Integer.parseInt(bookId));
                 session.setAttribute("cart", cart);
             } catch (BookException ex) {
                 msg = "Book Not Found";
             }
         } else {
             List<Integer> cart = (List<Integer>) session.getAttribute("cart");
-            int index = this.exists(Integer.parseInt(id), cart);
+            int index = this.exists(Integer.parseInt(bookId), cart);
             if (index == -1) {
                 try {
-                    Book book = bookService.getBookById(Integer.parseInt(id));
-                    cart.add(Integer.parseInt(id));
+                    Book book = bookService.getBookById(Integer.parseInt(bookId));
+                    cart.add(Integer.parseInt(bookId));
                 } catch (BookException ex) {
                     msg = "Book Not Found";
                 }
