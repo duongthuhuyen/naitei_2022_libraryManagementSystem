@@ -2,10 +2,14 @@ package com.sun.service;
 
 import com.sun.dto.HistoryDto;
 import com.sun.dto.HistoryRequestDto;
+import com.sun.entity.Book;
 import com.sun.entity.History;
+import com.sun.entity.HistoryDetail;
+import com.sun.entity.User;
 import com.sun.mapper.HistoryMapper;
 import com.sun.repository.HistoryDetailRepository;
 import com.sun.repository.HistoryRepository;
+import com.sun.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
