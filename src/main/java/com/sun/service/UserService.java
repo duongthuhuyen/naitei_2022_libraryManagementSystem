@@ -1,5 +1,6 @@
 package com.sun.service;
 
+import com.sun.common.CurrentUser;
 import com.sun.entity.User;
 import com.sun.repository.UserRepository;
 import org.hibernate.HibernateException;
@@ -20,8 +21,8 @@ import java.util.Set;
 
 @Service("userDetailsService")
 @Transactional
-public class UserService implements IUserService{
-	
+public class UserService implements IUserService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -35,7 +36,7 @@ public class UserService implements IUserService{
             throw new UsernameNotFoundException("User does not exits!!!");
 
         User user = users.get(0);
-
+        CurrentUser.currentUser = user;
         Set<GrantedAuthority> authorities = new HashSet<>();
 
         authorities.add(new SimpleGrantedAuthority(String.valueOf(user.getRole())));
@@ -58,7 +59,8 @@ public class UserService implements IUserService{
         user.setPassword(this.passwordEncoder.encode(password));
 
         try {
-            if (userRepository.save(user) == null) throw new HibernateException("User: " + user.getName() + "cannot save");
+            if (userRepository.save(user) == null)
+                throw new HibernateException("User: " + user.getName() + "cannot save");
             return true;
         } catch (HibernateException exception) {
             exception.getMessage();

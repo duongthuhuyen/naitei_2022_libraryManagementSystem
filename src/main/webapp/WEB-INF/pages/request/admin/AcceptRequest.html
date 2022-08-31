@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>History</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+</head>
+
+</head>
+<body>
+<div th:insert="layout/headerBook :: header"></div>
+<div th:if="${message}" class="alert alert-success" role="alert">
+    <p th:text="${message}">Message</p>
+</div>
+<div class="container my-2">
+    <div class="card">
+        <div class="card-body">
+            <div th:switch="${requests}" class="container my-5">
+                <div class="col-md-12">
+                    <h2 th:case="null">No record found !!</h2>
+                    <div th:case="*">
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>History Id</th>
+                                <th>User name</th>
+                                <th>Email</th>
+                                <th>Number Of Book</th>
+                                <th>Received Date</th>
+                                <th>Detail</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="request : ${requests}">
+                                <td th:text="${request.getHistoryId()}"></td>
+                                <td th:text="${request.getUserName()}"></td>
+                                <td th:text="${request.getEmail()}"></td>
+                                <td th:text="${request.getNumberOfBook()}"></td>
+                                <td><a th:href="@{/admin/request/detail/{id}(id=${request.getHistoryId()})}">Detail</a>
+                                </td>
+                                l
+                                <td><a th:href="@{/admin/accept/{id}(id=${request.getHistoryId()})}"><i
+                                        class="fas fa-solid fa-check"></i></a></td>
+                                <td><a th:href="@{/admin/deny/{id}(id=${request.getHistoryId()})}"><i
+                                        class="fas fa-solid fa-trash"></i></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!-- <div>
+                           <a class="btn btn-primary" th:href="@{/request/add}" role="button">Send Request</a>
+                         </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="layout/footerBook :: footer"></div>
+</body>
+
+</html>

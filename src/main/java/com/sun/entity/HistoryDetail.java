@@ -24,4 +24,9 @@ public class HistoryDetail implements Serializable {
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book bookId;
+
+    public HistoryDetail(History history, Book bookId) {
+        this.history = history;
+        this.bookId = bookId;
+    }
 }
