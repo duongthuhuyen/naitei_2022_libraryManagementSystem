@@ -30,8 +30,7 @@ public class BookService {
     }
 
     public Book getBookById(int id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new BookException(BookException.BOOK_NOT_FOUND));
-        return book;
+        return bookRepository.findById(id).orElseThrow(() -> new BookException(BookException.BOOK_NOT_FOUND));
     }
 
 }	

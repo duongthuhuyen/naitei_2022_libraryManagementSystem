@@ -20,8 +20,8 @@ public class HistoryController {
     @Autowired
     private HistoryService historyService;
 
-    @RequestMapping(value = "/history", method = RequestMethod.GET)
-    public String getHistory(ModelMap model) {
+    @RequestMapping(value = "/histories", method = RequestMethod.GET)
+    public String index(ModelMap model) {
         int id = 0;
         if (CurrentUser.currentUser != null) {
             id = CurrentUser.currentUser.getId();
@@ -31,8 +31,8 @@ public class HistoryController {
         return "/historyPage/history";
     }
 
-    @RequestMapping(value = "/historydetail/{id}", method = RequestMethod.GET)
-    public String getHistoryDetail(@PathVariable("id") String id, ModelMap model) {
+    @RequestMapping(value = "/histories/{id}", method = RequestMethod.GET)
+    public String show(@PathVariable("id") String id, ModelMap model) {
         List<Book> books = historyService.getHistoryDetail(Integer.parseInt(id));
         model.addAttribute("books", books);
         return "/historyPage/HistoryDetail";

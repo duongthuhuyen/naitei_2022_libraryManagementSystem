@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.transaction.Transactional;
@@ -41,15 +42,15 @@ public class HistoryService {
         List<HistoryDto> historyDtos = new ArrayList<>();
         try {
             List<History> histories = historyRepository.findByUserId(userId);
-            if (!histories.isEmpty()) {
-                for (History history : histories) {
-                    historyDtos.add(HistoryMapper.mapHistoryDto(history));
-                }
+            for (History history : histories) {
+                historyDtos.add(HistoryMapper.mapHistoryDto(history));
             }
+
+            return historyDtos;
         } catch (Exception ex) {
             logger.warning(ex.getMessage());
+            return Collections.emptyList();
         }
-        return historyDtos;
     }
 
     public List<Book> getHistoryDetail(int historyId) {
@@ -76,9 +77,10 @@ public class HistoryService {
                 List<HistoryDetail> historyDetails = historyDetailRepository.getByHistoryId(history.getId());
                 historyRequestDtos.add(HistoryMapper.mapHistory(history, historyDetails, user));
             }
+            return historyRequestDtos;
         } catch (Exception ex) {
             logger.warning(ex.getMessage());
+            return Collections.emptyList();
         }
-        return historyRequestDtos;
     }
 }

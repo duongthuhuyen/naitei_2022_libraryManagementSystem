@@ -3,6 +3,7 @@ package com.sun.controller;
 
 import com.sun.common.CurrentUser;
 import com.sun.entity.Book;
+import com.sun.exception.BookException;
 import com.sun.service.BookService;
 import com.sun.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,30 +27,39 @@ public class RequestController {
     private BookService bookService;
 
     @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
-    public String request(ModelMap model, HttpSession session, @PathVariable("id") String id) {
+    public String request(ModelMap model, HttpSession session, @PathVariable("id") String bookId) {
         String msg = "Success!";
         if (session.getAttribute("cart") == null) {
-            List<Book> cart = new ArrayList<Book>();
-            cart.add(bookService.getBookById(Integer.parseInt(id)));
-            session.setAttribute("cart", cart);
+            List<Integer> cart = new ArrayList<>();
+            try {
+                Book book = bookService.getBookById(Integer.parseInt(id));
+                cart.add(Integer.parseInt(id));
+                session.setAttribute("cart", cart);
+            } catch (BookException ex) {
+                msg = "Book Not Found";
+            }
         } else {
-            List<Book> cart = (List<Book>) session.getAttribute("cart");
+            List<Integer> cart = (List<Integer>) session.getAttribute("cart");
             int index = this.exists(Integer.parseInt(id), cart);
             if (index == -1) {
-                cart.add(bookService.getBookById(Integer.parseInt(id)));
+                try {
+                    Book book = bookService.getBookById(Integer.parseInt(id));
+                    cart.add(Integer.parseInt(id));
+                } catch (BookException ex) {
+                    msg = "Book Not Found";
+                }
             } else {
                 msg = "The book already exists in the cart";
             }
             session.setAttribute("cart", cart);
         }
         model.addAttribute("message", msg);
-        System.out.println(msg);
         return "redirect:/home";
     }
 
     @RequestMapping(value = "/remove/{id}", method = RequestMethod.GET)
     public String remove(@PathVariable("id") String id, HttpSession session, ModelMap model) {
-        List<Book> cart = (List<Book>) session.getAttribute("cart");
+        List<Integer> cart = (List<Integer>) session.getAttribute("cart");
         int index = this.exists(Integer.parseInt(id), cart);
         cart.remove(index);
         session.setAttribute("cart", cart);
@@ -59,14 +69,18 @@ public class RequestController {
 
     @RequestMapping(value = "/request/view")
     public String viewRequest(ModelMap modelMap, HttpSession session) {
-        List<Book> cart = (List<Book>) session.getAttribute("cart");
-        modelMap.addAttribute("books", cart);
+        List<Integer> cart = (List<Integer>) session.getAttribute("cart");
+        List<Book> books = new ArrayList<>();
+        for (Integer id : cart) {
+            books.add(bookService.getBookById(id));
+        }
+        modelMap.addAttribute("books", books);
         return "/request/requestPage";
     }
 
-    private int exists(int id, List<Book> cart) {
+    private int exists(int id, List<Integer> cart) {
         for (int i = 0; i < cart.size(); i++) {
-            if (cart.get(i).getId() == id) {
+            if (cart.get(i) == id) {
                 return i;
             }
         }
@@ -77,12 +91,12 @@ public class RequestController {
     public String requestDelete(@PathVariable("id") String id, ModelMap model) {
         String msg = requestService.deleteRequest(Integer.parseInt(id));
         model.addAttribute("message", msg);
-        return "redirect:/history";
+        return "redirect:/histories";
     }
 
     @RequestMapping(value = "/request/add", method = RequestMethod.GET)
     public String requestAdd(ModelMap model, HttpSession session) {
-        List<Book> books = (List<Book>) session.getAttribute("cart");
+        List<Integer> books = (List<Integer>) session.getAttribute("cart");
         String msg = "";
         if (books.isEmpty()) {
             msg = "Request Don't have any book";

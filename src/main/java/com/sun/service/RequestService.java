@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -52,35 +53,29 @@ public class RequestService {
     }
 
     @Transactional
-    public String request(int userId, List<Book> books) {
+    public String request(int userId, List<Integer> books) {
         String msg = "Send Success";
-        boolean check = false;
-        for (Book book : books) {
-            boolean check_borrow = checkBorrow(userId, book.getId());
+        for (Integer book : books) {
+            boolean check_borrow = checkBorrow(userId, book);
             if (check_borrow) {
-                check = true;
                 return "Have any book borrowed";
             }
         }
-        if (!check) {
-            User user = userRepository.findById(userId).orElseThrow(() -> new UserException(UserException.USER_NOT_FOUND));
-            for (Book b : books) {
-                Book book = bookRepository.findById(b.getId()).orElseThrow(() -> new BookException(BookException.BOOK_NOT_FOUND)
-                );
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserException(UserException.USER_NOT_FOUND));
+        List<Book> books1 = new ArrayList<>();
+        for (Integer b : books) {
+            Book book = bookRepository.findById(b).orElseThrow(() -> new BookException(BookException.BOOK_NOT_FOUND));
+            books1.add(book);
+        }
+        History historyNew = new History(LocalDateTime.now(), History.EStatus.REQUEST, user);
+        try {
+            History history = historyRepository.save(historyNew);
+            for (Book b : books1) {
+                historyDetailRepository.save(new HistoryDetail(history, b));
             }
-            History historyNew = new History(LocalDateTime.now(), History.EStatus.REQUEST, user);
-            try {
-                History history = historyRepository.save(historyNew);
-                for (Book b : books) {
-                    historyDetailRepository.save(new HistoryDetail(history, b));
-                }
-            } catch (Exception ex) {
-                msg = RequestException.CREATE_REQUEST_ERROR.getMessage();
-                throw new RequestException(RequestException.CREATE_REQUEST_ERROR);
-            }
-        } else {
-            msg = RequestException.DENIED_CREATE_REQUEST.getMessage();
-            throw new RequestException(RequestException.DENIED_CREATE_REQUEST);
+        } catch (Exception ex) {
+            msg = RequestException.CREATE_REQUEST_ERROR.getMessage();
+            throw new RequestException(RequestException.CREATE_REQUEST_ERROR);
         }
         return msg;
     }
@@ -88,7 +83,6 @@ public class RequestService {
     @Transactional
     public String deleteRequest(int historyId) {
         String msg = "Delete False";
-        System.out.println(historyId);
         History history = historyRepository.findById(historyId).orElseThrow(() -> new HistoryException(HistoryException.HISTORY_NOT_FOUND));
         if (history.getStatus() == History.EStatus.REQUEST) {
             try {
@@ -105,13 +99,10 @@ public class RequestService {
     @Transactional
     public String acceptRequest(int historyId) {
         String msg = "Success";
-        System.out.println(historyId);
         History history = historyRepository.findById(historyId).orElseThrow(() -> new HistoryException(HistoryException.HISTORY_NOT_FOUND));
         if (history.getStatus() == History.EStatus.REQUEST) {
             try {
-                System.out.println("update");
                 historyRepository.acceptRequest(historyId, LocalDateTime.now());
-                System.out.println("hi");
             } catch (Exception ex) {
                 msg = "Accept false";
                 logger.warning(ex.getMessage());
