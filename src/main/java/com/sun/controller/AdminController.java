@@ -32,7 +32,7 @@ public class AdminController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @RequestMapping(value = "/request/detail/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/requests/{id}", method = RequestMethod.GET)
     public String RequestDetail(@PathVariable("id") String id, ModelMap model) {
         List<Book> books = historyService.getHistoryDetail(Integer.parseInt(id));
         model.addAttribute("books", books);

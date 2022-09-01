@@ -42,9 +42,9 @@
                                 <td th:text="${request.getUserName()}"></td>
                                 <td th:text="${request.getEmail()}"></td>
                                 <td th:text="${request.getNumberOfBook()}"></td>
-                                <td><a th:href="@{/admin/request/detail/{id}(id=${request.getHistoryId()})}">Detail</a>
+                                <td><a th:href="@{/admin/requests/{id}(id=${request.getHistoryId()})}">Detail</a>
                                 </td>
-                                l
+
                                 <td><a th:href="@{/admin/accept/{id}(id=${request.getHistoryId()})}"><i
                                         class="fas fa-solid fa-check"></i></a></td>
                                 <td><a th:href="@{/admin/deny/{id}(id=${request.getHistoryId()})}"><i

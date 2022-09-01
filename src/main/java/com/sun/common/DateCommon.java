@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateCommon {
-    public static String FORMAT_01 = "dd-MM-yyyy";
+    public static String FORMAT_DDMMYYYY = "dd-MM-yyyy";
     public static String Format(LocalDateTime date){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateCommon.FORMAT_01);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateCommon.FORMAT_DDMMYYYY);
 
         String formatDateTime = date.format(formatter);
         return formatDateTime;
