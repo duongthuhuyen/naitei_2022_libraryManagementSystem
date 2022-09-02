@@ -54,6 +54,7 @@ public class RequestController {
             session.setAttribute("cart", cart);
         }
         model.addAttribute("message", msg);
+        session.setAttribute("messageAddBook", msg);
         return "redirect:/home";
     }
 
@@ -64,6 +65,7 @@ public class RequestController {
         cart.remove(index);
         session.setAttribute("cart", cart);
         model.addAttribute("message", "Remove Success!");
+        session.setAttribute("messageRemoveBook", "Remove Success");
         return "redirect:/request/view";
     }
 
@@ -71,10 +73,13 @@ public class RequestController {
     public String viewRequest(ModelMap modelMap, HttpSession session) {
         List<Integer> cart = (List<Integer>) session.getAttribute("cart");
         List<Book> books = new ArrayList<>();
-        for (Integer id : cart) {
-            books.add(bookService.getBookById(id));
+        if (cart != null) {
+            for (Integer id : cart) {
+                books.add(bookService.getBookById(id));
+            }
+            modelMap.addAttribute("books", books);
         }
-        modelMap.addAttribute("books", books);
+        modelMap.addAttribute("books", null);
         return "/request/requestPage";
     }
 
@@ -107,6 +112,7 @@ public class RequestController {
             }
         }
         model.addAttribute("message", msg);
+        session.setAttribute("messageRequest", msg);
         return "redirect:/home";
     }
 }

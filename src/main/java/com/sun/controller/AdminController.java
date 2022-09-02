@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -41,17 +42,19 @@ public class AdminController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
-    public String acceptRequest(@PathVariable("id") String id, ModelMap model) {
+    public String acceptRequest(@PathVariable("id") String id, ModelMap model, HttpSession session) {
         String msg = requestService.acceptRequest(Integer.parseInt(id));
         model.addAttribute("message", msg);
+        session.setAttribute("messageAcceptRequest", msg);
         return "redirect:/admin/request";
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/deny/{id}", method = RequestMethod.GET)
-    public String denyRequest(@PathVariable("id") String id, ModelMap model) {
+    public String denyRequest(@PathVariable("id") String id, ModelMap model, HttpSession session) {
         String msg = requestService.deleteRequest(Integer.parseInt(id));
         model.addAttribute("message", msg);
+        session.setAttribute("messageDenyRequest", msg);
         return "redirect:/admin/request";
     }
 }
