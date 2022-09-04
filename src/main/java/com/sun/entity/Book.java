@@ -7,6 +7,10 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -24,7 +28,6 @@ public class Book implements Serializable {
 		this.publisher = publisher;
 		this.description = description;
 	}
-    
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

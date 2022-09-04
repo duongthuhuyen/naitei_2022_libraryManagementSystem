@@ -8,5 +8,6 @@ import java.util.List;
 public interface IUserService extends UserDetailsService {
 
     List<User> getUsers(String email);
+    User getUser(String email);
     boolean addUser(User user);
 }

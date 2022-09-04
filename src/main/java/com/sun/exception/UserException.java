@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserException extends RuntimeException {
+public class UserException extends RuntimeException{
     private ErrorCode errorCode;
-    public static final ErrorCode USER_NOT_FOUND = new ErrorCode("User Not Found", "User-01", HttpStatus.BAD_REQUEST);
+    public static final ErrorCode USER_NOT_FOUND = new ErrorCode("User Not Found","User-01", HttpStatus.BAD_REQUEST);
 }

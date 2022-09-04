@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping(path = "/user")
 public class UserController {
@@ -43,5 +45,16 @@ public class UserController {
     @GetMapping(path = "/login")
     public String login() {
         return "users/login";
+    }
+
+    @GetMapping(path = "/security")
+    public String security() {
+        return "/users/security";
+    }
+
+    @GetMapping(path = "/logout")
+    public String logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("currentUser");
+        return "redirect:/user/login";
     }
 }

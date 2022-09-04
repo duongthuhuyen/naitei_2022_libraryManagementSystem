@@ -10,11 +10,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface HistoryDetailRepository extends JpaRepository<HistoryDetail, Integer> {
-    @Query(value = "select * from historydetails where history_id = :historyId", nativeQuery = true)
+public interface HistoryDetailRepository extends JpaRepository<HistoryDetail,Integer> {
+    @Query(value = "select * from historydetails where history_id = :historyId",nativeQuery = true)
     List<HistoryDetail> getByHistoryId(@Param("historyId") int historyId);
-
     @Modifying
-    @Query(value = "Delete from historydetails where history_id = :historyId", nativeQuery = true)
+    @Query(value = "Delete from historydetails where history_id = :historyId",nativeQuery = true)
     void deleteByHistoryId(@Param("historyId") int historyId);
 }

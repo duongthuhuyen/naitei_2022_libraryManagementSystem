@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistoryException extends RuntimeException {
+public class HistoryException extends RuntimeException{
     private ErrorCode errorCode;
-    public static ErrorCode HISTORY_NOT_FOUND = new ErrorCode("History Not Found", "History-01", HttpStatus.BAD_REQUEST);
+    public static ErrorCode HISTORY_NOT_FOUND = new ErrorCode("History Not Found","History-01", HttpStatus.BAD_REQUEST);
 }

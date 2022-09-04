@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_USER')")
+@PreAuthorize("hasRole('USER')")
 public class RequestController {
     @Autowired
     private RequestService requestService;
@@ -94,9 +94,10 @@ public class RequestController {
     }
 
     @RequestMapping(value = "/request/delete/{id}", method = RequestMethod.GET)
-    public String requestDelete(@PathVariable("id") String id, ModelMap model) {
+    public String requestDelete(@PathVariable("id") String id, ModelMap model,HttpSession session) {
         String msg = requestService.deleteRequest(Integer.parseInt(id));
         model.addAttribute("message", msg);
+        session.setAttribute("messageDeleteRequest",msg);
         return "redirect:/histories";
     }
 

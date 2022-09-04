@@ -24,5 +24,4 @@ public class TypeBook implements Serializable {
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
-
 }

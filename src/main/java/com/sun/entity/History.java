@@ -9,13 +9,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Entity
 @Table(name = "histories")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
+
 public class History implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,18 +27,16 @@ public class History implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 50)
     private EStatus status;
-
-    public enum EStatus {
-        REQUEST, ACCEPT, REJECT;
+    public enum EStatus{
+        REQUEST,ACCEPT,REJECT;
     }
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "history")
     private List<HistoryDetail> historyDetails;
-
+    
     public History(LocalDateTime receivedDate, LocalDateTime borrowDate, EStatus status, User user) {
         this.receivedDate = receivedDate;
         this.borrowDate = borrowDate;

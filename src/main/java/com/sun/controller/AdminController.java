@@ -17,14 +17,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "/admin")
-
+@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
     @Autowired
     private HistoryService historyService;
     @Autowired
     private RequestService requestService;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/request", method = RequestMethod.GET)
     public String Request(ModelMap model) {
         List<HistoryRequestDto> historyRequestDtoList = historyService.getAllByRequest();
@@ -32,7 +31,6 @@ public class AdminController {
         return "/request/admin/AcceptRequest";
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/requests/{id}", method = RequestMethod.GET)
     public String RequestDetail(@PathVariable("id") String id, ModelMap model) {
         List<Book> books = historyService.getHistoryDetail(Integer.parseInt(id));
@@ -40,7 +38,6 @@ public class AdminController {
         return "/request/admin/requestDetail";
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/accept/{id}", method = RequestMethod.GET)
     public String acceptRequest(@PathVariable("id") String id, ModelMap model, HttpSession session) {
         String msg = requestService.acceptRequest(Integer.parseInt(id));
@@ -49,7 +46,6 @@ public class AdminController {
         return "redirect:/admin/request";
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @RequestMapping(value = "/deny/{id}", method = RequestMethod.GET)
     public String denyRequest(@PathVariable("id") String id, ModelMap model, HttpSession session) {
         String msg = requestService.deleteRequest(Integer.parseInt(id));

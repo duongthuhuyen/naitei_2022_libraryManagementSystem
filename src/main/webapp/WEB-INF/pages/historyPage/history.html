@@ -20,14 +20,6 @@
                 <span th:text="${session.messageDeleteRequest}"></span>
             </div>
             <th:block th:text="${#session.removeAttribute('messageDeleteRequest')}"></th:block>
-            <div th:switch="${message}">
-                <div th:case="'Success'" class="alert alert-success">
-                    <strong>Success!</strong> Operation performed successfully.
-                </div>
-                <div th:case="'Failed'" class="alert alert-danger">
-                    <strong>Failure!</strong> Operation failed. Please try again
-                </div>
-            </div>
             <div th:switch="${histories}" class="container my-5">
                 <div class="col-md-12">
                     <h2 th:case="null">No record found !!</h2>

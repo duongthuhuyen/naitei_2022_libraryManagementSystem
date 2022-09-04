@@ -21,8 +21,8 @@ import java.util.Set;
 
 @Service("userDetailsService")
 @Transactional
-public class UserService implements IUserService {
-
+public class UserService implements IUserService{
+	
     @Autowired
     private UserRepository userRepository;
 
@@ -30,8 +30,8 @@ public class UserService implements IUserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<User> users = getUsers(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        List<User> users = getUsers(email);
         if (users.isEmpty())
             throw new UsernameNotFoundException("User does not exits!!!");
 
@@ -42,7 +42,7 @@ public class UserService implements IUserService {
         authorities.add(new SimpleGrantedAuthority(String.valueOf(user.getRole())));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getName(),
+                user.getEmail(),
                 user.getPassword(),
                 authorities
         );
@@ -54,13 +54,17 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User getUser(String email) {
+        return userRepository.findByEmail(email).get();
+    }
+
+    @Override
     public boolean addUser(User user) {
         String password = user.getPassword();
         user.setPassword(this.passwordEncoder.encode(password));
 
         try {
-            if (userRepository.save(user) == null)
-                throw new HibernateException("User: " + user.getName() + "cannot save");
+            if (userRepository.save(user) == null) throw new HibernateException("User: " + user.getName() + "cannot save");
             return true;
         } catch (HibernateException exception) {
             exception.getMessage();
