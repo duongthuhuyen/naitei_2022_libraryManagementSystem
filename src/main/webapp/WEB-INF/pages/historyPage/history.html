@@ -51,7 +51,7 @@
                                 <td th:text="${history.getStatus()}"></td>
                                 <td><a th:href="@{/request/delete/{id}(id=${history.getId()})}"><i
                                         class="fas fa-solid fa-trash"></i></a></td>
-                                <td><a th:href="@{/historydetail/{id}(id=${history.getId()})}">Detail</a></td>
+                                <td><a th:href="@{/histories/{id}(id=${history.getId()})}">Detail</a></td>
                             </tr>
                             </tbody>
                         </table>

@@ -78,8 +78,9 @@ public class RequestController {
                 books.add(bookService.getBookById(id));
             }
             modelMap.addAttribute("books", books);
+        } else {
+            modelMap.addAttribute("books", null);
         }
-        modelMap.addAttribute("books", null);
         return "/request/requestPage";
     }
 
